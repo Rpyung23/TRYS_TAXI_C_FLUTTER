@@ -10,7 +10,6 @@ class PageOnboarding extends StatelessWidget {
   Widget build(BuildContext context) {
     return OnBoardingSlider(
         totalPage: 3,
-        finishButtonColor: colorPrimary,
         finishButtonText: 'EMPEZEMOS',
         onFinish: () {
           Navigator.of(context).pushNamed("home");

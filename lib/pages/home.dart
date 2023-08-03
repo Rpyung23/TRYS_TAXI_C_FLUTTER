@@ -6,16 +6,10 @@ import 'package:app/utils/colors.dart';
 import 'package:app/utils/dimens.dart';
 import 'package:app/utils/icons.dart';
 import 'package:app/utils/strings.dart';
-import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:switch_it/switch_it.dart';
-import 'package:flutter_background_geolocation/flutter_background_geolocation.dart'
-    as bgLocation;
 
 class PageHome extends StatefulWidget {
   PageHome({super.key});
@@ -50,7 +44,7 @@ class _PageHomeState extends State<PageHome> {
     BlocProvider.of<UserBloc>(context, listen: false)
         .add(UserOnOffLineStateUserEvent(false));
 
-    bgLocation.BackgroundGeolocation.stop();
+    //bgLocation.BackgroundGeolocation.stop();
   }
 
   @override
@@ -190,9 +184,8 @@ class _PageHomeState extends State<PageHome> {
           ),
           ListTile(
             leading: Badge(
-              elevation: 1,
-              alignment: Alignment.topRight,
-              badgeContent: Text(
+              alignment: AlignmentDirectional.topEnd,
+              label: const Text(
                 '+1',
                 style: TextStyle(color: Colors.white, fontSize: 9),
               ),
@@ -401,37 +394,15 @@ class _PageHomeState extends State<PageHome> {
   }
 
   _getBody() {
-    return BlocBuilder<MonitoreoBloc, MonitoreoState>(
-        builder: (context, state) {
-      Set<Marker> _markersAuxiliar = Set();
-
-      if (state is UpdateMonitoreoState) {
-        widget.oMarkerMiPosition = Marker(
-            markerId: MarkerId(widget.idMarkerOrigin),
-            position: state.LatLngMonitoreo,
-            rotation: state.rumboMonitoreo,
-            icon: widget.iconoMonitoreo == null
-                ? BitmapDescriptor.defaultMarker
-                : widget.iconoMonitoreo!);
-
-        widget._markers.add(widget.oMarkerMiPosition!);
-
-        if (widget.controllerGoogleMaps != null) {
-          widget.controllerGoogleMaps!.moveCamera(
-              CameraUpdate.newLatLngZoom(state.LatLngMonitoreo, 17));
-        }
-      }
-
-      return GoogleMap(
-        mapType: MapType.normal,
-        zoomControlsEnabled: false,
-        markers: widget._markers,
-        initialCameraPosition: widget._kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          widget.controllerGoogleMaps = controller;
-        },
-      );
-    });
+    return GoogleMap(
+      mapType: MapType.normal,
+      zoomControlsEnabled: false,
+      markers: widget._markers,
+      initialCameraPosition: widget._kGooglePlex,
+      onMapCreated: (GoogleMapController controller) {
+        widget.controllerGoogleMaps = controller;
+      },
+    );
   }
 
   _getBlocWidget() {
@@ -440,66 +411,15 @@ class _PageHomeState extends State<PageHome> {
         //Navigator.of(context).pushNamed("gps"
         if (state is UserOnOffLineState) {
           if (state.isOnline) {
-            _initLocationBackground();
             return _getOnLine();
           }
         }
 
-        bgLocation.BackgroundGeolocation.stop();
+        //bgLocation.BackgroundGeolocation.stop();
         //widget._markers.clear();
         return _getOffLine();
       }),
     );
-  }
-
-  _initLocationBackground() {
-    ////
-    // 1.  Listen to events (See docs for all 12 available events).
-    //
-
-    // Fired whenever a location is recorded
-    bgLocation.BackgroundGeolocation.onLocation((bgLocation.Location location) {
-      //print('[location] - $location');
-
-      BlocProvider.of<MonitoreoBloc>(context, listen: false).add(
-          UpdateMonitoreoEvent(
-              LatLng(location.coords.latitude, location.coords.longitude),
-              (location.coords.heading)));
-
-      /*_initMyPosition(
-          LatLng(location.coords.latitude, location.coords.longitude));*/
-    });
-
-    // Fired whenever the plugin changes motion-state (stationary->moving and vice-versa)
-    bgLocation.BackgroundGeolocation.onMotionChange(
-        (bgLocation.Location location) {
-      print('[motionchange] - $location');
-    });
-
-    // Fired whenever the state of location-services changes.  Always fired at boot
-    bgLocation.BackgroundGeolocation.onProviderChange(
-        (bgLocation.ProviderChangeEvent event) {
-      print('[providerchange] - $event');
-    });
-
-    ////
-    // 2.  Configure the plugin
-    //
-    bgLocation.BackgroundGeolocation.ready(bgLocation.Config(
-            desiredAccuracy: bgLocation.Config.DESIRED_ACCURACY_HIGH,
-            distanceFilter: 5.0,
-            stopOnTerminate: false,
-            startOnBoot: true,
-            debug: false,
-            logLevel: bgLocation.Config.LOG_LEVEL_VERBOSE))
-        .then((bgLocation.State state) {
-      if (!state.enabled) {
-        ////
-        // 3.  Start the plugin.
-        //
-        bgLocation.BackgroundGeolocation.start();
-      }
-    });
   }
 
   initLoadImg() async {

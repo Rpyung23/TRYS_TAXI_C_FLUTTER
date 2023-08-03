@@ -1,8 +1,8 @@
-import 'package:animated_horizontal_calendar/animated_horizontal_calendar.dart';
 import 'package:app/utils/colors.dart';
 import 'package:app/utils/dimens.dart';
 import 'package:app/utils/icons.dart';
 import 'package:app/widget/WidgetCardJobNormal.dart';
+import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -56,8 +56,21 @@ class PageHistory extends StatelessWidget {
       alignment: Alignment.center,
       padding: EdgeInsets.all(0),
       margin: EdgeInsets.all(0),
-      height: 90,
-      child: AnimatedHorizontalCalendar(
+      height: 130,
+      child: CalendarTimeline(
+        initialDate: DateTime(2020, 4, 20),
+        firstDate: DateTime(2019, 1, 15),
+        lastDate: DateTime(2023, 11, 20),
+        onDateSelected: (date) => print(date),
+        leftMargin: 20,
+        monthColor: Colors.blueGrey,
+        dayColor: colorBlackOpacity90,
+        activeDayColor: Colors.white,
+        activeBackgroundDayColor: colorSecondary,
+        dotsColor: colorBlack,
+        selectableDayPredicate: (date) => date.day != 23,
+        locale: 'en_ISO',
+      ) /*AnimatedHorizontalCalendar(
           tableCalenderIcon: IconCalendarWhite,
           date: DateTime.now(),
           unSelectedBoxShadow: BoxShadow(
@@ -78,7 +91,8 @@ class PageHistory extends StatelessWidget {
             buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
           ),
           selectedColor: colorSecondary,
-          onDateSelected: (date) {}),
+          onDateSelected: (date) {})*/
+      ,
     );
   }
 

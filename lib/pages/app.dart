@@ -46,8 +46,8 @@ class MyApp extends StatelessWidget {
             'chat': (_) => PageChatScreen(),
             '/': (_) => PageOnboarding()
           },
-          debugShowCheckedModeBanner: false,
-          initialRoute: 'login'),
+          debugShowCheckedModeBanner: true,
+          initialRoute: 'home'),
     );
   }
 }
