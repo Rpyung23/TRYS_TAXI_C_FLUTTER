@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "988023334602",
+    "project_id": "cursoflutter-uber",
+    "storage_bucket": "cursoflutter-uber.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:988023334602:android:ac3a3566a39b894597b633",
+        "android_client_info": {
+          "package_name": "com.example.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "988023334602-2hs703710o2d1dvo49v2352ss8phqm24.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.app",
+            "certificate_hash": "e466371bddc8c44aa56fc3fd33f1b6c8f8bafbd2"
+          }
+        },
+        {
+          "client_id": "988023334602-gcp9fon7o1q4i4tldnjern15p4cbc4of.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlvyyLZAMZwZXMhgJfuNm-m4CHKFckEUQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "988023334602-gcp9fon7o1q4i4tldnjern15p4cbc4of.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

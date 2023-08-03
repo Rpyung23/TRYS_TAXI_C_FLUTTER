@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
             '/': (_) => PageOnboarding()
           },
           debugShowCheckedModeBanner: true,
-          initialRoute: 'home'),
+          initialRoute: 'login'),
     );
   }
 }
